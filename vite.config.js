@@ -7,5 +7,5 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
-  // base: "/Portfolio_jov/",
+  base: "/Portfolio_jov/",
 });
