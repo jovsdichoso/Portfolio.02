@@ -53,16 +53,16 @@ const App = () => {
               frameBorder='0'
               width='100%'
               height='100%'
-              className="rounded-[28px] pointer-events-none"
+              className="rounded-[28px] md:pointer-events-none"
               title="3D Developer Avatar"
               loading="lazy"
               style={{
-                pointerEvents: 'none',
                 userSelect: 'none',
                 overflow: 'hidden'
               }}
             />
           </section>
+
 
 
           {/* INTRO CARD */}
