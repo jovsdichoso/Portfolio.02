@@ -324,7 +324,7 @@ const App = () => {
               </h1>
             </header>
 
-            <p className="mt-[170px] text-zinc-400 text-sm leading-relaxed max-w-[90%]">
+            <p className="mt-[150px] text-zinc-400 text-sm leading-relaxed max-w-[90%]">
               BSIT Student & Developer based in the Philippines.
               I design and build web and mobile apps.
             </p>
