@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import Loading from '../components/Loading';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   FaReact, FaJs, FaGitAlt, FaFigma, FaFacebook,
   FaGithub, FaLinkedin, FaTwitter, FaInstagram,
   FaDiscord
 } from "react-icons/fa";
 import { SiFirebase, SiExpo, SiAndroid, SiNodedotjs, SiTailwindcss } from "react-icons/si";
-import { MdEmail, MdArrowOutward } from "react-icons/md";
+import { MdEmail, MdArrowOutward, MdQrCode, MdClose } from "react-icons/md";
 import CV from './assets/CV.pdf';
 
 // --- DATA & CONFIG ---
@@ -80,10 +80,7 @@ const SocialHexagon = () => (
     </div>
 
     {/* 2. THE GREETING ROBOT (Center) */}
-    {/* FIX APPLIED: 
-        - Added 'overflow-hidden' to crop the logo.
-        - Changed translate values to center the robot face.
-    */}
+    {/* KEPT YOUR ORIGINAL POSITIONING HERE */}
     <div className="absolute inset-0 z-[1] flex items-center justify-center overflow-hidden rounded-full pointer-events-none">
       <iframe
         src='https://my.spline.design/genkubgreetingrobot-tykkOzP9AHuoQDQI8daodMNj/'
@@ -138,6 +135,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [isExiting, setIsExiting] = useState(false);
   const [time, setTime] = useState("");
+  const [showQR, setShowQR] = useState(false); // ADDED: State for QR Modal
 
   // Time Logic
   useEffect(() => {
@@ -303,44 +301,108 @@ const App = () => {
             className="flex flex-col md:flex-row gap-3 order-6 md:order-none"
             style={{ gridArea: 'btns' }}
           >
-            {/* BUTTON 1: GET IN TOUCH */}
+            {/* BUTTON 1: GET IN TOUCH 
+                FIX: Reduced to 'md:flex-1' so it takes up LESS space (approx 33%)
+            */}
             <a
               href="mailto:your.email@example.com"
-              // FIXES:
-              // 1. Added 'w-full' for mobile, 'md:w-auto' for desktop
-              // 2. Changed 'flex-[2]' to 'md:flex-[2]' so it only applies on desktop
-              // 3. Increased mobile bg opacity to 'bg-zinc-900' so it's visible on black
-              className="group w-full md:w-auto md:flex-[2] relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
-    bg-zinc-900 md:bg-white/5 border border-white/10 backdrop-blur-md text-zinc-400 
-    transition-all duration-300 
-    hover:bg-white/10 hover:text-white hover:border-white/30 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] 
-    active:scale-[0.98] no-underline cursor-pointer"
+              className="group w-full md:w-auto md:flex-1 relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
+              bg-zinc-900 md:bg-white/5 border border-white/10 backdrop-blur-md text-zinc-400 
+              transition-all duration-300 
+              hover:bg-white/10 hover:text-white hover:border-white/30 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] 
+              active:scale-[0.98] no-underline cursor-pointer"
             >
               <MdEmail className="mr-2 text-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
               Get in Touch
             </a>
 
-            {/* BUTTON 2: RESUME */}
-            <a
-              href={CV}
-              target="_blank"
-              rel="noopener noreferrer"
-              // FIXES: Same as above (w-full for mobile, flex-1 only for desktop)
-              className="group w-full md:w-auto md:flex-1 relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
-    bg-zinc-800 md:bg-white/10 border border-white/20 backdrop-blur-xl text-white 
-    transition-all duration-300 
-    hover:scale-[1.02] hover:border-white/50 
-    hover:shadow-[0_0_25px_rgba(0,219,222,0.35)] 
-    active:scale-[0.95] cursor-pointer no-underline"
-            >
-              <div className="absolute inset-0 -translate-x-full group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 z-0" />
+            {/* CONTAINER FOR RESUME + QR 
+                FIX: Increased to 'md:flex-[2]' so it takes up MOST of the space (approx 66%)
+            */}
+            <div className="flex flex-row gap-3 w-full md:flex-[2] h-[50px] md:h-full">
 
-              <span className="relative z-10 flex items-center">
-                Resume
-                <MdArrowOutward className="ml-1.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </span>
-            </a>
+              {/* BUTTON 2: RESUME 
+                    FIX: Added 'whitespace-nowrap' to ensure text never cuts off.
+                    It now has plenty of room to stretch.
+                */}
+              <a
+                href={CV}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group flex-1 relative overflow-hidden rounded-[18px] font-semibold text-sm flex items-center justify-center 
+                  bg-zinc-800 md:bg-white/10 border border-white/20 backdrop-blur-xl text-white 
+                  transition-all duration-300 
+                  hover:scale-[1.02] hover:border-white/50 
+                  hover:shadow-[0_0_25px_rgba(0,219,222,0.35)] 
+                  active:scale-[0.95] cursor-pointer no-underline"
+              >
+                <div className="absolute inset-0 -translate-x-full group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 z-0" />
+                <span className="relative z-10 flex items-center whitespace-nowrap">
+                  Resume
+                  <MdArrowOutward className="ml-1.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </span>
+              </a>
+
+              {/* BUTTON 3: QR CODE */}
+              <button
+                onClick={() => setShowQR(true)}
+                className="h-full aspect-square relative overflow-hidden rounded-[18px] flex items-center justify-center 
+                  bg-zinc-800 md:bg-white/5 border border-white/10 backdrop-blur-md text-zinc-400 
+                  transition-all duration-300 
+                  hover:bg-white/10 hover:text-white hover:border-white/30 hover:scale-105 active:scale-95 cursor-pointer"
+                title="Share / Scan QR"
+              >
+                <MdQrCode className="text-xl" />
+              </button>
+            </div>
           </section>
+
+
+
+          {/* --- QR MODAL (ADDED) --- */}
+          <AnimatePresence>
+            {showQR && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                {/* Backdrop */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+                  onClick={() => setShowQR(false)}
+                ></motion.div>
+
+                {/* Modal Content */}
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="relative bg-[#111] border border-white/10 p-6 rounded-[28px] max-w-sm w-full flex flex-col items-center shadow-2xl z-50"
+                >
+                  <button
+                    onClick={() => setShowQR(false)}
+                    className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors"
+                  >
+                    <MdClose size={24} />
+                  </button>
+
+                  <h3 className="text-xl font-bold text-white mb-2">Let's Connect</h3>
+                  <p className="text-zinc-400 text-sm mb-6 text-center">Scan to view my portfolio on mobile</p>
+
+                  {/* QR Code Container */}
+                  <div className="p-4 bg-white rounded-2xl mb-4">
+                    <img
+                      src={`https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(window.location.href)}`}
+                      alt="Portfolio QR Code"
+                      className="w-40 h-40 mix-blend-multiply"
+                    />
+                  </div>
+
+                  <p className="text-[10px] text-zinc-500 uppercase tracking-widest">Jovs • Developer</p>
+                </motion.div>
+              </div>
+            )}
+          </AnimatePresence>
 
         </motion.div>
 
