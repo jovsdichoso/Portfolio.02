@@ -303,38 +303,40 @@ const App = () => {
             className="flex flex-col md:flex-row gap-3 order-6 md:order-none"
             style={{ gridArea: 'btns' }}
           >
-            {/* BUTTON 1: GET IN TOUCH (Wiggle Effect + Brighten) */}
+            {/* BUTTON 1: GET IN TOUCH */}
             <a
               href="mailto:your.email@example.com"
-              className="group flex-[2] relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
-    bg-white/5 border border-white/10 backdrop-blur-md text-zinc-400 
+              // FIXES:
+              // 1. Added 'w-full' for mobile, 'md:w-auto' for desktop
+              // 2. Changed 'flex-[2]' to 'md:flex-[2]' so it only applies on desktop
+              // 3. Increased mobile bg opacity to 'bg-zinc-900' so it's visible on black
+              className="group w-full md:w-auto md:flex-[2] relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
+    bg-zinc-900 md:bg-white/5 border border-white/10 backdrop-blur-md text-zinc-400 
     transition-all duration-300 
     hover:bg-white/10 hover:text-white hover:border-white/30 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] 
     active:scale-[0.98] no-underline cursor-pointer"
             >
-              {/* Icon Wiggle Animation */}
               <MdEmail className="mr-2 text-lg transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" />
               Get in Touch
             </a>
 
-            {/* BUTTON 2: RESUME (The "Hype" Button - Sheen + Color Glow) */}
+            {/* BUTTON 2: RESUME */}
             <a
               href={CV}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex-1 relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
-    bg-white/10 border border-white/20 backdrop-blur-xl text-white 
+              // FIXES: Same as above (w-full for mobile, flex-1 only for desktop)
+              className="group w-full md:w-auto md:flex-1 relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
+    bg-zinc-800 md:bg-white/10 border border-white/20 backdrop-blur-xl text-white 
     transition-all duration-300 
     hover:scale-[1.02] hover:border-white/50 
     hover:shadow-[0_0_25px_rgba(0,219,222,0.35)] 
     active:scale-[0.95] cursor-pointer no-underline"
             >
-              {/* The "Sheen" Effect (Sliding Light) */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12 z-0" />
 
               <span className="relative z-10 flex items-center">
                 Resume
-                {/* Arrow Fly Animation */}
                 <MdArrowOutward className="ml-1.5 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
               </span>
             </a>
