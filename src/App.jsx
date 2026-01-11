@@ -305,7 +305,7 @@ const App = () => {
                 FIX: Reduced to 'md:flex-1' so it takes up LESS space (approx 33%)
             */}
             <a
-              href="mailto:your.email@example.com"
+              href="mailto:joviedichoso@thelewiscollege.edu.ph"
               className="group w-full md:w-auto md:flex-1 relative overflow-hidden rounded-[18px] font-semibold text-sm h-[50px] md:h-full flex items-center justify-center 
               bg-zinc-900 md:bg-white/5 border border-white/10 backdrop-blur-md text-zinc-400 
               transition-all duration-300 
